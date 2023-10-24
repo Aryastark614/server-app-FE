@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   constructor(private serverService: ServerService, private notifier: NotificationService) { }
 
   ngOnInit(): void {
+    // Initialize the component when it's first loaded.
     this.appState$ = this.serverService.servers$
       .pipe(
         map(response => {
@@ -46,6 +47,7 @@ export class AppComponent implements OnInit {
       );
   }
 
+// Ping a server with the provided IP address.
   pingServer(ipAddress: string): void {
     this.filterSubject.next(ipAddress);
     this.appState$ = this.serverService.ping$(ipAddress)
@@ -65,6 +67,8 @@ export class AppComponent implements OnInit {
         })
       );
   }
+
+  // Save a server.
 
   saveServer(serverForm: NgForm): void {
     this.isLoading.next(true);
@@ -89,6 +93,7 @@ export class AppComponent implements OnInit {
       );
 }
 
+// Filter servers based on status.
   filterServers(status: Status): void {
     this.appState$ = this.serverService.filter$(status, this.dataSubject.value)
       .pipe(
@@ -103,6 +108,8 @@ export class AppComponent implements OnInit {
         })
       );
   }
+
+  // Delete a server.
 
   deleteServer(server: Server): void {
     this.appState$ = this.serverService.delete$(server.id)
@@ -123,6 +130,7 @@ export class AppComponent implements OnInit {
       );
   }
 
+  // Print a report or download it.
   printReport(): void {
     this.notifier.onDefault('Report downloaded');
     // window.print();

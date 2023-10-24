@@ -8,10 +8,12 @@ import { Server } from '../interface/server';
 
 @Injectable({ providedIn: 'root' })
 export class ServerService {
+  // Define the base API URL
   private readonly apiUrl = 'http://localhost:8080';
   
   constructor(private http: HttpClient) { }
 
+  // Observable to fetch the list of servers
   servers$ = <Observable<CustomResponse>>
     this.http.get<CustomResponse>(`${this.apiUrl}/server/list`)
       .pipe(
@@ -19,6 +21,7 @@ export class ServerService {
         catchError(this.handleError)
       );
 
+      // Observable to save a new server
   save$ = (server: Server) => <Observable<CustomResponse>>
     this.http.post<CustomResponse>(`${this.apiUrl}/server/save`, server)
       .pipe(
@@ -26,6 +29,7 @@ export class ServerService {
         catchError(this.handleError)
       );
 
+      // Observable to ping a server
   ping$ = (ipAddress: string) => <Observable<CustomResponse>>
     this.http.get<CustomResponse>(`${this.apiUrl}/server/ping/${ipAddress}`)
       .pipe(
@@ -33,6 +37,7 @@ export class ServerService {
         catchError(this.handleError)
       );
 
+      // Observable to filter servers by status
   filter$ = (status: Status, response: CustomResponse) => <Observable<CustomResponse>>
     new Observable<CustomResponse>(
       suscriber => {
@@ -59,6 +64,7 @@ export class ServerService {
         catchError(this.handleError)
       );
 
+       // Observable to delete a server by its ID
   delete$ = (serverId: number) => <Observable<CustomResponse>>
     this.http.delete<CustomResponse>(`${this.apiUrl}/server/delete/${serverId}`)
       .pipe(
@@ -67,6 +73,7 @@ export class ServerService {
       );
 
 
+      // Error handling method
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.log(error);
     return throwError(`An error occurred - Error code: ${error.status}`);

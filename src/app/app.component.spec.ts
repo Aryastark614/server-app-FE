@@ -165,8 +165,8 @@ describe('AppComponent', () => {
        name: 'Server 3',
        memory: '8GB',
        type: 'Virtual',
-       imageUrl: 'server-image.jpg', // Use the appropriate URL
-       status: Status.SERVER_UP, // Use the appropriate status
+       imageUrl: 'server-image.jpg', 
+       status: Status.SERVER_UP,
     };
     const now = new Date();
     const timeStamp = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
